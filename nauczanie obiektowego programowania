@@ -8,9 +8,9 @@
 <?php
 class baza{
         static private $pol;
-        function __construct($host,$name,$pass,$db){//konstruktor moze byc tez funkcja statyczna uzyta
-        if(! self::$pol){//sprawdza czy jest  $pol self:: uzywa się do zmiennych statycznych
-        self::$pol = new mysqli($host,$name,$pass,$db);//tworzymy polaczenie obiektowe
+        function __construct($host,$name,$pass,$db){//konstruktor
+        if(! self::$pol){//sprawdza czy jest
+        self::$pol = new mysqli($host,$name,$pass,$db);//tworzymy polaczenie do większych projektów pdo
         }
         }
         function Wyswietlanie($sql,$l){//funkcja z zmiennymi $sql-zapytanie $l ilosc wyswietlanych rekordow
@@ -27,8 +27,8 @@ class baza{
         {
                 global $pol;
                 $zagadka = "4";
-                $_SESSION["z"]=$_POST['zagadka'];
-                if ($_SESSION["z"]==$zagadka){//By przy odświeżaniu co chwile nie wysyłało zapytania do bazy danych można użyć md5() i rand() albo stworzyc podstrone osobno
+                $_SESSION["z"]=$_POST['zagadka'];// przykład złego używania session
+                if ($_SESSION["z"]==$zagadka
                 session_destroy();
                 session_regenerate_id(true);
                 header('LOCATION: zadanie.php');//stary sposób ale bez kolizyjny
@@ -37,7 +37,7 @@ class baza{
         $nazwisko = $_POST['nazwisko'];
         $telefon = $_POST['telefon'];
         $email = $_POST['email'];
-        $r->bind_param('ssss',$imie,$nazwisko,$telefon,$email);//bindujemy zmienne s to ? w PDO normalnie są nazwy do PDO trzeba zrobić polaczenie $pol = new pdo(dane)
+        $r->bind_param('ssss',$imie,$nazwisko,$telefon,$email);//bindujemy zmienne s moze byc dowolna nazwa
         $r->execute();//wylowywanie
         $r->close();//zamykanie zapytania
         self::$pol->close();//zamykanie  polaczenia
